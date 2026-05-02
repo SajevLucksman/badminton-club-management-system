@@ -1,6 +1,5 @@
 import { useState } from 'react';
-import { db } from '../../data/firebase';
-import { collection, query, where, getDocs } from 'firebase/firestore';
+import { verifyAdminCredentials } from '../../services/authService';
 
 export default function Login({ onLogin }) {
   const [username, setUsername] = useState('');
@@ -13,25 +12,25 @@ export default function Login({ onLogin }) {
     if (!username || !password) { setError('Enter username and password.'); return; }
     setError(''); setLoading(true);
     try {
-      const snap = await getDocs(query(collection(db, 'users'), where('username', '==', username), where('password', '==', password)));
-      if (snap.empty) setError('Invalid credentials.');
-      else onLogin();
+      const valid = await verifyAdminCredentials(username, password);
+      if (valid) onLogin();
+      else setError('Invalid credentials.');
     } catch { setError('Login failed.'); }
     finally { setLoading(false); }
   };
 
   return (
     <div className="loginOverlay">
-      <div style={{ background: 'var(--panel)', padding: 32, borderRadius: 16, boxShadow: '0 4px 24px rgba(0,0,0,.15)', width: 340, textAlign: 'center' }}>
-        <h2 style={{ margin: '0 0 8px', color: 'var(--accent)' }}>🏸 Admin Login</h2>
-        <p style={{ color: 'var(--muted)', fontSize: '.85rem', margin: '0 0 20px' }}>Log in to manage badminton charges</p>
+      <div className="loginCard">
+        <h2 className="accent-text">Admin Login</h2>
+        <p className="sub">Log in to manage badminton charges</p>
         <form onSubmit={handleSubmit}>
-          <input type="text" placeholder="Username" value={username} onChange={e => setUsername(e.target.value)} style={{ width: '100%', padding: 10, marginBottom: 10, background: 'var(--panel2)' }} />
-          <input type="password" placeholder="Password" value={password} onChange={e => setPassword(e.target.value)} onKeyDown={e => e.key === 'Enter' && handleSubmit(e)} style={{ width: '100%', padding: 10, marginBottom: 14, background: 'var(--panel2)' }} />
-          {error && <div style={{ color: '#dc2626', fontSize: '.85rem', marginBottom: 10 }}>{error}</div>}
-          <button className="btn" type="submit" disabled={loading} style={{ width: '100%', padding: 10, fontSize: '1rem' }}>{loading ? 'Logging in…' : 'Log in as Admin'}</button>
+          <input type="text" placeholder="Username" value={username} onChange={e => setUsername(e.target.value)} className="login-input" />
+          <input type="password" placeholder="Password" value={password} onChange={e => setPassword(e.target.value)} className="login-input" />
+          {error && <div className="login-error">{error}</div>}
+          <button className="btn login-btn" type="submit" disabled={loading}>{loading ? 'Logging in…' : 'Log in as Admin'}</button>
         </form>
-        <p style={{ color: 'var(--muted)', fontSize: '.8rem', margin: '14px 0 0' }}>Contact <strong>Sajev Lucksman</strong> for access.</p>
+        <p className="login-hint">Contact <strong>Sajev Lucksman</strong> for access.</p>
       </div>
     </div>
   );

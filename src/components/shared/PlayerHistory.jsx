@@ -24,7 +24,7 @@ export default function PlayerHistory({ data, player, onClose }) {
       <div className="modal-content" onClick={e => e.stopPropagation()}>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 16 }}>
           <h3 style={{ margin: 0 }}>{player} — Payment History</h3>
-          <button onClick={onClose} style={{ background: 'none', border: 'none', fontSize: '1.4rem', cursor: 'pointer', color: 'var(--muted)' }}>✕</button>
+          <button onClick={onClose} style={{ background: 'none', border: 'none', fontSize: '1.4rem', cursor: 'pointer', color: 'var(--muted)' }}>x</button>
         </div>
         <div className="sub" style={{ marginBottom: 12 }}>Total paid: LKR {fmtMoney(totalPaid)} · {payments.length} payment(s)</div>
         {slice.length === 0 ? <div className="sub">No payments found.</div> : (
