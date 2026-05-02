@@ -22,7 +22,6 @@ export default function MemberView({ data, players, selectedKey, setSelectedKey,
         <div className="brand">
           <h1>Badminton Charges Manager</h1>
           <p>Member View — Read Only</p>
-          <p className="sub">Weber Indoor, Batticaloa &nbsp;|&nbsp; 6 PM – 7 PM</p>
         </div>
         <div className="monthCtl">
           <MonthNav selectedKey={selectedKey} setSelectedKey={setSelectedKey} currentKey={currentKey} />

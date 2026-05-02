@@ -6,7 +6,7 @@ A web-based badminton court booking and cost management system for clubs. Tracks
 
 ## About the Project
 
-Built for a badminton group at Weber Indoor, Batticaloa to manage shared court costs. The system splits monthly expenses across main and standby players, tracks who has paid, carries credits/debits forward to the next month, and provides a complete financial overview.
+Built to manage shared badminton court costs for a group of players. The system splits monthly expenses across main and standby players, tracks who has paid, carries credits/debits forward to the next month, and provides a complete financial overview.
 
 ### Key Features
 
@@ -34,41 +34,45 @@ Built for a badminton group at Weber Indoor, Batticaloa to manage shared court c
 | Vite | 8.0.x | Build tool & dev server |
 | Firebase | 10.12.2 | Backend platform |
 | Cloud Firestore | via Firebase | Real-time NoSQL database |
+| Firebase Hosting | via Firebase | Production deployment |
 | ESLint | 10.2.x | Code linting |
 | Node.js | 22.x+ | Runtime |
 
 ## Project Structure
 
 ```
-├── src/
-│   ├── components/
-│   │   ├── admin/
-│   │   │   ├── Login.jsx              # Admin login with Firestore auth
-│   │   │   └── AdminDashboard.jsx     # Full admin panel with editing
-│   │   ├── member/
-│   │   │   ├── MemberView.jsx         # Read-only member dashboard
-│   │   │   ├── ChargesTable.jsx       # Charges summary & payment table
-│   │   │   ├── Expenses.jsx           # Expenses table & balance card
-│   │   │   └── ShuttleTracker.jsx     # Shuttle usage tracking
-│   │   └── shared/
-│   │       ├── Calendar.jsx           # Monthly calendar grid
-│   │       ├── MonthNav.jsx           # Month/year navigation
-│   │       └── PlayerHistory.jsx      # Payment history modal
-│   ├── hooks/
-│   │   ├── useBadmintonData.js        # Firestore real-time sync & state
-│   │   └── useTheme.js               # Light/dark theme toggle
-│   ├── data/
-│   │   └── firebase.js               # Firebase config (env vars)
-│   ├── utils/
-│   │   └── helpers.js                 # Business logic & calculations
-│   ├── styles/
-│   │   └── index.css                  # Global styles with light/dark theme
-│   ├── App.jsx                        # Router: / (member) + /admin
-│   └── main.jsx
-├── .env.example                       # Firebase config template
-├── .gitignore                         # Excludes .env, Firebase hosting, dist
-├── package.json
-└── index.html
+src/
+├── components/
+│   ├── admin/
+│   │   ├── Login.jsx                  # Admin login page
+│   │   ├── AdminDashboard.jsx         # Admin layout (composes below)
+│   │   ├── AdminChargesTable.jsx      # Editable charges, payments, history
+│   │   ├── AdminExpenses.jsx          # Add/remove expenses
+│   │   └── AdminShuttleTracker.jsx    # Editable shuttle tracking
+│   ├── member/
+│   │   ├── MemberView.jsx             # Read-only member dashboard
+│   │   ├── ChargesTable.jsx           # Charges summary & payment table
+│   │   ├── Expenses.jsx               # Expenses table & balance card
+│   │   └── ShuttleTracker.jsx         # Shuttle usage tracking
+│   └── shared/
+│       ├── Calendar.jsx               # Reusable monthly calendar grid
+│       ├── MonthNav.jsx               # Month/year navigation controls
+│       ├── PlayerHistory.jsx          # Payment history modal
+│       └── PlayersModal.jsx           # Add/remove players modal
+├── services/
+│   ├── authService.js                 # Admin login verification
+│   └── badmintonService.js            # Firestore data subscribe & save
+├── hooks/
+│   ├── useBadmintonData.js            # App state + real-time sync
+│   └── useTheme.js                    # Light/dark theme toggle
+├── data/
+│   └── firebase.js                    # Firebase initialization (env vars)
+├── utils/
+│   └── helpers.js                     # Business logic & calculations
+├── styles/
+│   └── index.css                      # Global styles with light/dark theme
+├── App.jsx                            # Router: / (member) + /admin
+└── main.jsx
 ```
 
 ## Prerequisites
@@ -121,9 +125,30 @@ npm run build
 
 # Preview locally
 npm run preview
+```
 
-# Deploy to Firebase Hosting
-firebase deploy --only hosting
+### Deploy to Firebase Hosting
+
+Ensure `firebase.json` exists in the project root:
+
+```json
+{
+  "hosting": {
+    "public": "dist",
+    "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
+    "rewrites": [{ "source": "**", "destination": "/index.html" }]
+  }
+}
+```
+
+The `rewrites` rule ensures React Router client-side routing works (e.g., `/admin` won't 404).
+
+```bash
+# Login to Firebase (first time only)
+firebase login
+
+# Deploy
+npm run build && firebase deploy --only hosting
 ```
 
 ## Available Scripts
