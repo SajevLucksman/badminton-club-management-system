@@ -1,0 +1,56 @@
+import { ensureMonth, fmtMoney, getExpenseTotal, monthTotals, clamp2 } from '../../utils/helpers';
+
+export default function Expenses({ data, players, selectedKey }) {
+  ensureMonth(data, selectedKey, players.main, players.standby);
+  const expenses = data.months[selectedKey]?.expenses || [];
+  const { court, shuttle, total: expTotal } = getExpenseTotal(data, selectedKey);
+  const totals = monthTotals(data, selectedKey, players.main, players.standby);
+  let totalCollected = 0;
+  totals.rows.forEach(r => { totalCollected = clamp2(totalCollected + r.paid); });
+  const balance = clamp2(totalCollected - expTotal);
+
+  return (
+    <section className="card" style={{ maxWidth: 1200, margin: '12px auto 0', padding: 0, width: 'calc(100% - 32px)' }}>
+      <div className="cardHeader"><h2>💰 Expenses for this Month</h2></div>
+      <div className="cardBody">
+        <table>
+          <thead><tr><th>Type</th><th className="right">Amount (LKR)</th><th>Shop</th><th>Date</th></tr></thead>
+          <tbody>
+            {expenses.length === 0
+              ? <tr><td colSpan="4" style={{ color: 'var(--muted)' }}>No expenses recorded.</td></tr>
+              : expenses.map((e, i) => (
+                <tr key={i}>
+                  <td>{e.type === 'court' ? 'Court Booking (MC)' : 'Shuttle Purchase'}</td>
+                  <td className="right">{fmtMoney(e.amount)}</td>
+                  <td>{e.shop || '—'}</td>
+                  <td>{e.date || '—'}</td>
+                </tr>
+              ))
+            }
+          </tbody>
+          <tfoot>
+            <tr style={{ fontWeight: 700 }}><td>Total Court</td><td className="right">{fmtMoney(court)}</td><td colSpan="2" /></tr>
+            <tr style={{ fontWeight: 700 }}><td>Total Shuttles</td><td className="right">{fmtMoney(shuttle)}</td><td colSpan="2" /></tr>
+          </tfoot>
+        </table>
+
+        <div style={{ marginTop: 16, padding: 16, borderRadius: 12, border: '1px solid var(--line)' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 12, textAlign: 'center' }}>
+            <div><div className="sub">💵 Total Collected</div><strong style={{ fontSize: '1.2rem', color: '#10b981' }}>{fmtMoney(totalCollected)}</strong></div>
+            <div><div className="sub">💸 Total Expenses</div><strong style={{ fontSize: '1.2rem', color: '#ef4444' }}>{fmtMoney(expTotal)}</strong></div>
+            <div><div className="sub">📊 Balance</div><strong style={{ fontSize: '1.2rem', color: balance >= 0 ? '#10b981' : '#ef4444' }}>{balance >= 0 ? '+' : ''}{fmtMoney(balance)}</strong></div>
+          </div>
+          <div style={{ textAlign: 'center', marginTop: 12, padding: 10, borderRadius: 8, fontWeight: 600, fontSize: '.9rem',
+            background: expTotal === 0 ? 'transparent' : balance > 0 ? 'rgba(16,185,129,0.1)' : balance === 0 ? 'rgba(245,158,11,0.1)' : 'rgba(239,68,68,0.1)',
+            color: expTotal === 0 ? 'var(--muted)' : balance > 0 ? '#10b981' : balance === 0 ? '#f59e0b' : '#ef4444'
+          }}>
+            {expTotal === 0 ? 'No expenses recorded yet.'
+              : balance > 0 ? `✅ Surplus! Collected LKR ${fmtMoney(balance)} more than spent.`
+              : balance === 0 ? '⚖️ Perfectly balanced.'
+              : `⚠️ Deficit! Spent LKR ${fmtMoney(Math.abs(balance))} more than collected.`}
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}

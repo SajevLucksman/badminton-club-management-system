@@ -1,0 +1,237 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap');
+
+/* ── Theme Variables ── */
+:root {
+  --bg:#f4f6f9; --panel:#ffffff; --panel2:#eef1f5;
+  --text:#1e293b; --muted:#64748b;
+  --accent:#2563eb; --accent2:#06b6d4;
+  --booked:#ef4444; --avail:#10b981; --warn:#f59e0b;
+  --line:rgba(0,0,0,0.10);
+  --card-bg:linear-gradient(180deg, rgba(0,0,0,0.02), rgba(0,0,0,0.01));
+  --card-header-bg:linear-gradient(90deg, rgba(37,99,235,0.10), rgba(6,182,212,0.06));
+  --day-border:rgba(0,0,0,0.06);
+  --day-bg:linear-gradient(180deg, rgba(0,0,0,0.02), rgba(0,0,0,0.01));
+  --row-bg:linear-gradient(180deg, rgba(0,0,0,0.02), rgba(0,0,0,0.01));
+  --row-border:rgba(0,0,0,0.06);
+  --pill-border:rgba(0,0,0,0.10);
+  --pill-ok-bg:rgba(16,185,129,0.12); --pill-ok-color:#065f46;
+  --pill-due-bg:rgba(245,158,11,0.12); --pill-due-color:#92400e;
+  --pill-credit-bg:rgba(6,182,212,0.12); --pill-credit-color:#155e75;
+  --pill-notpaid-bg:rgba(239,68,68,0.10); --pill-notpaid-color:#991b1b;
+  --history-border:rgba(0,0,0,0.12);
+  --danger-color:#dc2626;
+  --ctl-bg:linear-gradient(180deg, rgba(0,0,0,0.03), rgba(0,0,0,0.01));
+  --body-grad1:rgba(6,182,212,0.04); --body-grad2:rgba(37,99,235,0.04);
+  --th-color:#f8fafc;
+}
+[data-theme="dark"] {
+  --bg:#061020; --panel:#071028; --panel2:#0b1220;
+  --text:#e6eef8; --muted:#94a3b8;
+  --line:rgba(255,255,255,0.06);
+  --card-bg:linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01));
+  --card-header-bg:linear-gradient(90deg, rgba(37,99,235,0.20), rgba(6,182,212,0.10));
+  --day-border:rgba(255,255,255,0.04);
+  --day-bg:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+  --row-bg:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+  --row-border:rgba(255,255,255,0.03);
+  --pill-border:rgba(255,255,255,0.08);
+  --pill-ok-bg:rgba(16,185,129,0.12); --pill-ok-color:#bff7df;
+  --pill-due-bg:rgba(245,158,11,0.10); --pill-due-color:#ffe2b3;
+  --pill-credit-bg:rgba(6,182,212,0.10); --pill-credit-color:#b8f6ff;
+  --pill-notpaid-bg:rgba(239,68,68,0.12); --pill-notpaid-color:#fca5a5;
+  --history-border:rgba(255,255,255,0.12);
+  --danger-color:#ffb4b4;
+  --ctl-bg:linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01));
+  --body-grad1:rgba(6,182,212,0.05); --body-grad2:rgba(37,99,235,0.05);
+  --th-color:#f8fafc;
+}
+
+/* ── Reset ── */
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{
+  font-family:'Inter',system-ui,'Segoe UI',Roboto,Arial,sans-serif;
+  background:
+    radial-gradient(900px 500px at 10% 10%, var(--body-grad1), transparent),
+    radial-gradient(900px 500px at 90% 90%, var(--body-grad2), transparent),
+    var(--bg);
+  color:var(--text);
+}
+
+/* ── Container ── */
+.container{max-width:1200px;margin:0 auto;padding:12px 16px 28px;display:flex;flex-direction:column;gap:14px}
+
+/* ── Topbar / Header ── */
+.topbar, .container > header {
+  display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;
+  padding:12px 0;
+}
+.topbar h1, .container > header h1 {font-size:18px;font-weight:800}
+.topbar a, .container > header a {color:var(--accent);text-decoration:none;font-weight:600;font-size:14px}
+.topbar > div, .container > header > div {display:flex;align-items:center;gap:8px}
+.brand h1{margin:0;font-size:18px}
+.brand p{margin:6px 0 0;color:var(--muted);font-size:12px}
+
+/* ── Month Controls ── */
+.monthCtl{
+  display:flex;align-items:center;gap:8px;flex-wrap:wrap;
+  background:var(--ctl-bg);padding:10px;border-radius:10px;border:1px solid var(--line);
+}
+
+/* ── Buttons ── */
+.btn{
+  border:0;cursor:pointer;color:white;
+  background:linear-gradient(90deg,var(--accent),var(--accent2));
+  padding:8px 14px;border-radius:8px;font-weight:600;font-size:13px;
+  font-family:inherit;transition:all 0.2s;
+}
+.btn:hover{opacity:0.9;transform:translateY(-1px)}
+.btn.secondary{background:transparent;border:1px solid var(--line);color:var(--text)}
+
+/* ── Form Controls ── */
+select,input[type="number"],input[type="text"],input[type="password"],input[type="date"]{
+  background:transparent;color:var(--text);
+  border:1px solid var(--line);border-radius:8px;padding:8px 10px;
+  outline:none;font-family:inherit;font-size:13px;
+}
+
+/* ── Layout Grid ── */
+.layout{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+
+/* ── Cards ── */
+.card{
+  background:var(--card-bg);border:1px solid var(--line);
+  border-radius:12px;overflow:hidden;min-width:0;
+}
+.cardHeader{
+  padding:12px 14px;display:flex;align-items:center;justify-content:space-between;gap:10px;
+  background:var(--card-header-bg);border-bottom:1px solid var(--line);
+  font-size:14px;font-weight:700;
+}
+.cardHeader h2{margin:0;font-size:14px}
+.cardBody{padding:14px;overflow-x:auto}
+
+/* ── Calendar ── */
+.calGrid{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:4px}
+.wd{padding:8px 6px;text-align:center;color:var(--muted);font-size:14px;font-weight:700}
+.day{
+  min-height:68px;padding:6px;border-radius:10px;
+  border:1px solid var(--day-border);background:var(--day-bg);
+  display:flex;flex-direction:column;min-width:0;cursor:pointer;transition:border-color 0.15s;
+}
+.day:hover:not(.inactive){border-color:var(--accent)}
+.day.selected{border:2px solid var(--accent);background:rgba(37,99,235,0.08)}
+.day.inactive{opacity:0.25;cursor:default;pointer-events:none}
+.dnum{font-weight:800;font-size:15px}
+.time{font-size:10px;color:var(--muted);margin-top:2px}
+.badge{
+  margin-top:auto;display:inline-block;padding:3px 0;border-radius:6px;
+  font-size:9px;font-weight:700;color:white;text-align:center;
+}
+.badge.booked{background:var(--booked)}
+.badge.avail{background:var(--avail)}
+.day.today{box-shadow:inset 0 0 0 2px var(--accent);position:relative}
+.day.today .dnum::after{content:"Today";font-size:8px;font-weight:600;color:var(--accent);margin-left:4px}
+
+/* ── Legend ── */
+.legend{display:flex;gap:10px;align-items:center;color:var(--muted);font-size:12px}
+.sw{width:12px;height:12px;border-radius:3px;display:inline-block}
+.sw.booked{background:var(--booked)}
+.sw.avail{background:var(--avail)}
+
+/* ── Tables ── */
+table{width:100%;border-collapse:separate;border-spacing:0 8px;font-size:13px}
+thead th{
+  text-align:left;font-size:12px;font-weight:800;
+  padding:10px 10px;background:linear-gradient(90deg,var(--accent),var(--accent2));color:var(--th-color);
+}
+thead th:first-child{border-top-left-radius:10px;border-bottom-left-radius:10px}
+thead th:last-child{border-top-right-radius:10px;border-bottom-right-radius:10px}
+tbody td{
+  padding:10px 10px;background:var(--row-bg);
+  border-top:1px solid var(--row-border);border-bottom:1px solid var(--row-border);
+}
+tbody tr td:first-child{border-left:1px solid var(--row-border);border-top-left-radius:10px;border-bottom-left-radius:10px}
+tbody tr td:last-child{border-right:1px solid var(--row-border);border-top-right-radius:10px;border-bottom-right-radius:10px}
+tbody tr{cursor:pointer;transition:opacity 0.15s}
+tbody tr:hover{opacity:0.85}
+
+/* ── Pills ── */
+.pill{
+  padding:3px 8px;border-radius:999px;font-size:11px;font-weight:800;display:inline-block;white-space:nowrap;
+  border:1px solid var(--pill-border);margin:2px;
+}
+.pill.ok,.pill.green{background:var(--pill-ok-bg);color:var(--pill-ok-color)}
+.pill.due,.pill.yellow{background:var(--pill-due-bg);color:var(--pill-due-color)}
+.pill.credit{background:var(--pill-credit-bg);color:var(--pill-credit-color)}
+.pill.notpaid{background:var(--pill-notpaid-bg);color:var(--pill-notpaid-color)}
+
+/* ── Grids ── */
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px}
+.grid4{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:10px}
+.fullRow{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+
+/* ── Mini Card ── */
+.mini{
+  background:var(--panel2);border:1px solid var(--line);
+  border-radius:10px;padding:10px;min-width:0;overflow:hidden;
+}
+.mini label{display:block;color:var(--muted);font-size:12px;margin-bottom:6px}
+.mini strong{display:block;font-size:14px}
+
+/* ── Shuttle & Pay Boxes ── */
+.shuttleBox{margin-top:12px;padding:12px;border-radius:12px;background:var(--panel2);border:1px solid var(--line)}
+.shuttleBox h3{margin:0 0 10px;font-size:13px}
+.payBox{margin-top:12px;padding:12px;border-radius:12px;background:var(--panel2);border:1px solid var(--line)}
+.payBox h3{margin:0 0 10px;font-size:13px}
+.payRow{display:grid;grid-template-columns:1.2fr 0.7fr 0.9fr auto;gap:8px;align-items:center}
+.payRow .btn{padding:9px 10px}
+
+/* ── History ── */
+.history{margin-top:12px;border-top:1px dashed var(--history-border);padding-top:12px}
+.histList{margin:8px 0 0;padding-left:18px;color:var(--muted);font-size:12px;list-style:none}
+.histList li{padding:4px 0;display:flex;align-items:center;justify-content:space-between;gap:8px}
+
+/* ── Utility ── */
+.sub{color:var(--muted);font-size:12px}
+.hint{margin-top:8px;color:var(--muted);font-size:12px;line-height:1.35}
+.right{text-align:right;font-variant-numeric:tabular-nums}
+.danger{color:var(--danger-color)}
+
+/* ── Theme Button ── */
+.themeBtn{
+  border:0;cursor:pointer;background:transparent;font-size:20px;
+  padding:6px 8px;border-radius:8px;border:1px solid var(--line);line-height:1;
+}
+
+/* ── Modal ── */
+.modal-overlay{
+  position:fixed;inset:0;z-index:1000;background:rgba(0,0,0,0.45);
+  display:flex;align-items:center;justify-content:center;
+}
+.modal-content{
+  background:var(--panel);border-radius:12px;padding:24px;
+  min-width:380px;max-width:500px;max-height:80vh;
+  display:flex;flex-direction:column;box-shadow:0 8px 32px rgba(0,0,0,0.2);
+  overflow-y:auto;
+}
+
+/* ── Login Overlay ── */
+.loginOverlay{
+  position:fixed;inset:0;z-index:9999;background:var(--bg);
+  display:flex;align-items:center;justify-content:center;
+}
+.loginOverlay .loginCard{
+  background:var(--panel);padding:32px;border-radius:16px;
+  box-shadow:0 4px 24px rgba(0,0,0,.15);width:340px;text-align:center;
+}
+.loginOverlay input{width:100%;padding:10px;margin-bottom:10px;font-size:1rem;background:var(--panel2)}
+.loginOverlay .btn{width:100%;padding:10px;font-size:1rem}
+
+/* ── Footer ── */
+footer{text-align:center;padding:18px 0 24px;color:var(--muted);font-size:12px}
+
+/* ── Responsive ── */
+@media (max-width:1100px){.grid4{grid-template-columns:1fr 1fr}.grid3{grid-template-columns:1fr 1fr}}
+@media (max-width:980px){.layout{grid-template-columns:1fr}.grid2{grid-template-columns:1fr}.fullRow{grid-template-columns:1fr}}
