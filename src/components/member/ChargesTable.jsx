@@ -31,7 +31,7 @@ export default function ChargesTable({ data, players, selectedKey, onShowHistory
         </div>
 
         <div className="shuttleBox">
-          <h3>🏸 Shuttle Charges</h3>
+          <h3>Shuttle Charges</h3>
           <div className="grid3">
             <div className="mini"><label>Cost per tin (LKR)</label><strong>{fmtMoney(month.tinCost)}</strong></div>
             <div className="mini"><label>Tins this month</label><strong>{month.tinCount}</strong></div>

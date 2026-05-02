@@ -1,6 +1,5 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
-import { onSnapshot, setDoc } from 'firebase/firestore';
-import { DOC_REF } from '../data/firebase';
+import { subscribeToBadmintonData, saveBadmintonData } from '../services/badmintonService';
 import { monthKey, ensureMonth, propagateCreditsForward } from '../utils/helpers';
 
 const now = new Date();
@@ -13,18 +12,10 @@ export function useBadmintonData() {
   const saveTimer = useRef(null);
 
   useEffect(() => {
-    const unsub = onSnapshot(DOC_REF, snap => {
-      if (!snap.exists()) return;
-      const obj = snap.data();
-      const p = obj._members || { main: [], standby: [] };
-      setPlayers({ main: p.main || [], standby: p.standby || [] });
-      const d = JSON.parse(JSON.stringify(obj));
-      delete d._members;
-      if (!d.credits) d.credits = {};
-      if (!d.months) d.months = {};
+    return subscribeToBadmintonData(({ data: d, players: p }) => {
       setData(d);
+      setPlayers(p);
     });
-    return unsub;
   }, []);
 
   const save = useCallback((newData, newPlayers) => {
@@ -33,9 +24,7 @@ export function useBadmintonData() {
     if (newPlayers) setPlayers(newPlayers);
     clearTimeout(saveTimer.current);
     saveTimer.current = setTimeout(() => {
-      const exp = JSON.parse(JSON.stringify(newData));
-      exp._members = { main: p.main, standby: p.standby };
-      setDoc(DOC_REF, exp).catch(console.error);
+      saveBadmintonData(newData, p).catch(console.error);
     }, 500);
   }, [players]);
 

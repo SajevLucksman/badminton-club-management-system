@@ -12,8 +12,8 @@ export default function ShuttleTracker({ data, selectedKey, players = { main: []
   const pct = total > 0 ? Math.min(100, (remaining / total) * 100) : 0;
 
   return (
-    <section className="card" style={{ maxWidth: 1200, margin: '12px auto 0', padding: 0, width: 'calc(100% - 32px)' }}>
-      <div className="cardHeader"><h2>🏸 Shuttle Tracker</h2></div>
+    <section className="card section-wide">
+      <div className="cardHeader"><h2>Shuttle Tracker</h2></div>
       <div className="cardBody">
         <div className="grid4" style={{ textAlign: 'center', marginBottom: 16 }}>
           <div className="mini"><label>Tins Purchased</label><strong style={{ fontSize: '1.3rem', color: 'var(--accent)' }}>{tins}</strong><div className="sub">6 shuttles per tin</div></div>
@@ -25,7 +25,7 @@ export default function ShuttleTracker({ data, selectedKey, players = { main: []
           <div style={{ height: '100%', borderRadius: 6, background: remaining <= 2 ? '#ef4444' : 'linear-gradient(90deg,#10b981,#06b6d4)', transition: 'width .3s', width: `${pct}%` }} />
         </div>
         <h4 style={{ margin: '0 0 8px' }}>Shuttle usage this month</h4>
-        <Calendar selectedKey={selectedKey} selectedDays={month.shuttleDays || []} />
+        <Calendar selectedKey={selectedKey} selectedDays={month.shuttleDays || []} activeLabel="Used" inactiveLabel="" />
         <div style={{ marginTop: 12 }}>
           <div className="sub"><b>Shuttle usage log</b></div>
           <ul className="histList">

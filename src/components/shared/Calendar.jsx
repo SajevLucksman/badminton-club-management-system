@@ -1,6 +1,6 @@
 import { parseKey } from '../../utils/helpers';
 
-export default function Calendar({ selectedKey, selectedDays = [], onToggleDay }) {
+export default function Calendar({ selectedKey, selectedDays = [], onToggleDay, activeLabel = 'Booked', inactiveLabel = 'Available' }) {
   const { y, mIndex } = parseKey(selectedKey);
   const firstDow = new Date(y, mIndex, 1).getDay();
   const leading = (firstDow + 6) % 7;
@@ -34,7 +34,7 @@ export default function Calendar({ selectedKey, selectedDays = [], onToggleDay }
             >
               <div className="dnum">{d}</div>
               {booked && <div className="time">6 – 7 PM</div>}
-              <span className={`badge ${booked ? 'booked' : 'avail'}`}>{booked ? 'Booked' : 'Available'}</span>
+              <span className={`badge ${booked ? 'booked' : 'avail'}`}>{booked ? activeLabel : inactiveLabel}</span>
             </div>
           );
         })}
