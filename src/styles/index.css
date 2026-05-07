@@ -2,48 +2,42 @@
 
 /* ── Theme Variables ── */
 :root {
-  --bg:#f4f6f9; --panel:#ffffff; --panel2:#eef1f5;
-  --text:#1e293b; --muted:#64748b;
-  --accent:#2563eb; --accent2:#06b6d4;
-  --booked:#ef4444; --avail:#10b981; --warn:#f59e0b;
-  --line:rgba(0,0,0,0.10);
-  --card-bg:linear-gradient(180deg, rgba(0,0,0,0.02), rgba(0,0,0,0.01));
-  --card-header-bg:linear-gradient(90deg, rgba(37,99,235,0.10), rgba(6,182,212,0.06));
-  --day-border:rgba(0,0,0,0.06);
-  --day-bg:linear-gradient(180deg, rgba(0,0,0,0.02), rgba(0,0,0,0.01));
-  --row-bg:linear-gradient(180deg, rgba(0,0,0,0.02), rgba(0,0,0,0.01));
-  --row-border:rgba(0,0,0,0.06);
-  --pill-border:rgba(0,0,0,0.10);
-  --pill-ok-bg:rgba(16,185,129,0.12); --pill-ok-color:#065f46;
-  --pill-due-bg:rgba(245,158,11,0.12); --pill-due-color:#92400e;
-  --pill-credit-bg:rgba(6,182,212,0.12); --pill-credit-color:#155e75;
-  --pill-notpaid-bg:rgba(239,68,68,0.10); --pill-notpaid-color:#991b1b;
-  --history-border:rgba(0,0,0,0.12);
-  --danger-color:#dc2626;
-  --ctl-bg:linear-gradient(180deg, rgba(0,0,0,0.03), rgba(0,0,0,0.01));
-  --body-grad1:rgba(6,182,212,0.04); --body-grad2:rgba(37,99,235,0.04);
-  --th-color:#f8fafc;
+  --bg:#1a4d2e; --panel:rgba(0,40,20,0.55); --panel2:rgba(0,60,30,0.35);
+  --text:#e8f5e9; --muted:#a5d6a7;
+  --accent:#4dd0e1; --accent2:#00bcd4;
+  --booked:#e53935; --avail:#43a047; --warn:#fdd835;
+  --line:rgba(255,255,255,0.12);
+  --card-bg:rgba(0,50,25,0.45);
+  --card-header-bg:linear-gradient(90deg, rgba(0,80,40,0.6), rgba(0,60,30,0.45));
+  --day-border:rgba(255,255,255,0.1);
+  --day-bg:rgba(0,60,30,0.4);
+  --row-bg:rgba(0,80,40,0.3);
+  --row-border:rgba(255,255,255,0.06);
+  --pill-border:rgba(255,255,255,0.15);
+  --pill-ok-bg:rgba(76,175,80,0.25); --pill-ok-color:#c8e6c9;
+  --pill-due-bg:rgba(255,235,59,0.15); --pill-due-color:#fff9c4;
+  --pill-credit-bg:rgba(77,208,225,0.15); --pill-credit-color:#b2ebf2;
+  --pill-notpaid-bg:rgba(229,57,53,0.2); --pill-notpaid-color:#ffcdd2;
+  --history-border:rgba(255,255,255,0.15);
+  --danger-color:#ef5350;
+  --ctl-bg:rgba(0,60,30,0.6);
+  --body-grad1:rgba(0,100,50,0.3); --body-grad2:rgba(0,80,40,0.2);
+  --th-color:#ffffff;
+  --net-color:rgba(255,255,255,0.04);
 }
 [data-theme="dark"] {
-  --bg:#061020; --panel:#071028; --panel2:#0b1220;
-  --text:#e6eef8; --muted:#94a3b8;
-  --line:rgba(255,255,255,0.06);
-  --card-bg:linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01));
-  --card-header-bg:linear-gradient(90deg, rgba(37,99,235,0.20), rgba(6,182,212,0.10));
-  --day-border:rgba(255,255,255,0.04);
-  --day-bg:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
-  --row-bg:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
-  --row-border:rgba(255,255,255,0.03);
-  --pill-border:rgba(255,255,255,0.08);
-  --pill-ok-bg:rgba(16,185,129,0.12); --pill-ok-color:#bff7df;
-  --pill-due-bg:rgba(245,158,11,0.10); --pill-due-color:#ffe2b3;
-  --pill-credit-bg:rgba(6,182,212,0.10); --pill-credit-color:#b8f6ff;
-  --pill-notpaid-bg:rgba(239,68,68,0.12); --pill-notpaid-color:#fca5a5;
-  --history-border:rgba(255,255,255,0.12);
-  --danger-color:#ffb4b4;
-  --ctl-bg:linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01));
-  --body-grad1:rgba(6,182,212,0.05); --body-grad2:rgba(37,99,235,0.05);
-  --th-color:#f8fafc;
+  --bg:#0d2818; --panel:rgba(0,20,10,0.85); --panel2:rgba(0,30,15,0.6);
+  --text:#e8f5e9; --muted:#81c784;
+  --line:rgba(255,255,255,0.08);
+  --card-bg:rgba(0,30,15,0.7);
+  --card-header-bg:linear-gradient(90deg, rgba(0,60,30,0.9), rgba(0,40,20,0.7));
+  --day-border:rgba(255,255,255,0.06);
+  --day-bg:rgba(0,40,20,0.5);
+  --row-bg:rgba(0,50,25,0.4);
+  --row-border:rgba(255,255,255,0.04);
+  --ctl-bg:rgba(0,40,20,0.7);
+  --body-grad1:rgba(0,80,40,0.3); --body-grad2:rgba(0,60,30,0.2);
+  --net-color:rgba(255,255,255,0.03);
 }
 
 /* ── Reset ── */
@@ -51,12 +45,36 @@
 html,body{height:100%}
 body{
   font-family:'Inter',system-ui,'Segoe UI',Roboto,Arial,sans-serif;
-  background:
-    radial-gradient(900px 500px at 10% 10%, var(--body-grad1), transparent),
-    radial-gradient(900px 500px at 90% 90%, var(--body-grad2), transparent),
-    var(--bg);
+  background:var(--bg);
   color:var(--text);
+  position:relative;
+  overflow-x:hidden;
 }
+/* Badminton court lines */
+body::before{
+  content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
+  border:5px solid rgba(255,255,255,0.85);
+  margin:20px 5%;
+  background:
+    linear-gradient(0deg, transparent calc(50% - 2.5px), rgba(255,255,255,0.85) calc(50% - 2.5px), rgba(255,255,255,0.85) calc(50% + 2.5px), transparent calc(50% + 2.5px)),
+    linear-gradient(90deg, transparent calc(50% - 2px), rgba(255,255,255,0.7) calc(50% - 2px), rgba(255,255,255,0.7) calc(50% + 2px), transparent calc(50% + 2px)),
+    linear-gradient(90deg, transparent 5%, rgba(255,255,255,0.7) 5%, rgba(255,255,255,0.7) calc(5% + 4px), transparent calc(5% + 4px)),
+    linear-gradient(90deg, transparent 95%, rgba(255,255,255,0.7) 95%, rgba(255,255,255,0.7) calc(95% + 4px), transparent calc(95% + 4px)),
+    linear-gradient(0deg, transparent 20%, rgba(255,255,255,0.7) 20%, rgba(255,255,255,0.7) calc(20% + 4px), transparent calc(20% + 4px)),
+    linear-gradient(0deg, transparent 80%, rgba(255,255,255,0.7) 80%, rgba(255,255,255,0.7) calc(80% + 4px), transparent calc(80% + 4px)),
+    linear-gradient(0deg, transparent 8%, rgba(255,255,255,0.6) 8%, rgba(255,255,255,0.6) calc(8% + 4px), transparent calc(8% + 4px)),
+    linear-gradient(0deg, transparent 92%, rgba(255,255,255,0.6) 92%, rgba(255,255,255,0.6) calc(92% + 4px), transparent calc(92% + 4px));
+}
+/* Net mesh pattern across the center */
+body::after{
+  content:'';position:fixed;left:5%;right:5%;top:calc(50% - 18px);height:36px;z-index:0;pointer-events:none;
+  background:
+    repeating-linear-gradient(90deg, rgba(255,255,255,0.2) 0px, rgba(255,255,255,0.2) 1px, transparent 1px, transparent 10px),
+    repeating-linear-gradient(0deg, rgba(255,255,255,0.15) 0px, rgba(255,255,255,0.15) 1px, transparent 1px, transparent 6px);
+  border-top:4px solid rgba(255,255,255,0.7);
+  border-bottom:4px solid rgba(255,255,255,0.7);
+}
+#root{position:relative;z-index:1}
 
 /* ── Container ── */
 .container{max-width:1200px;margin:0 auto;padding:12px 16px 28px;display:flex;flex-direction:column;gap:14px}
@@ -64,36 +82,41 @@ body{
 /* ── Topbar / Header ── */
 .topbar, .container > header {
   display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;
-  padding:12px 0;
+  padding:36px 16px 12px;
 }
-.topbar h1, .container > header h1 {font-size:18px;font-weight:800}
+.topbar h1, .container > header h1 {font-size:20px;font-weight:900;color:#fff;text-shadow:0 2px 8px rgba(0,0,0,0.3)}
 .topbar a, .container > header a {color:var(--accent);text-decoration:none;font-weight:600;font-size:14px}
 .topbar > div, .container > header > div {display:flex;align-items:center;gap:8px}
-.brand h1{margin:0;font-size:18px}
-.brand p{margin:6px 0 0;color:var(--muted);font-size:12px}
+.brand h1{margin:0;font-size:20px}
+.brand p{margin:4px 0 0;color:var(--muted);font-size:12px}
+.brand{display:flex;align-items:center;gap:10px}
+.brand-logo{width:130px;height:130px;border-radius:50%;object-fit:cover;clip-path:circle(50%)}
 
 /* ── Month Controls ── */
 .monthCtl{
   display:flex;align-items:center;gap:8px;flex-wrap:wrap;
-  background:var(--ctl-bg);padding:10px;border-radius:10px;border:1px solid var(--line);
+  background:var(--ctl-bg);padding:10px 14px;border-radius:10px;border:1px solid var(--line);
+  backdrop-filter:blur(4px);
 }
 
 /* ── Buttons ── */
 .btn{
   border:0;cursor:pointer;color:white;
-  background:linear-gradient(90deg,var(--accent),var(--accent2));
+  background:linear-gradient(135deg,#2e7d32,#00897b);
   padding:8px 14px;border-radius:8px;font-weight:600;font-size:13px;
   font-family:inherit;transition:all 0.2s;
+  box-shadow:0 2px 8px rgba(0,0,0,0.2);
 }
-.btn:hover{opacity:0.9;transform:translateY(-1px)}
-.btn.secondary{background:transparent;border:1px solid var(--line);color:var(--text)}
+.btn:hover{opacity:0.9;transform:translateY(-1px);box-shadow:0 4px 12px rgba(0,0,0,0.3)}
+.btn.secondary{background:rgba(255,255,255,0.08);border:1px solid var(--line);color:var(--text)}
 
 /* ── Form Controls ── */
 select,input[type="number"],input[type="text"],input[type="password"],input[type="date"]{
-  background:transparent;color:var(--text);
+  background:rgba(0,40,20,0.5);color:var(--text);
   border:1px solid var(--line);border-radius:8px;padding:8px 10px;
   outline:none;font-family:inherit;font-size:13px;
 }
+select option{background:#1a4d2e;color:var(--text)}
 
 /* ── Layout Grid ── */
 .layout{display:grid;grid-template-columns:1fr 1fr;gap:14px}
@@ -102,13 +125,15 @@ select,input[type="number"],input[type="text"],input[type="password"],input[type
 .card{
   background:var(--card-bg);border:1px solid var(--line);
   border-radius:12px;overflow:hidden;min-width:0;
+  backdrop-filter:blur(4px);
+  box-shadow:0 4px 16px rgba(0,0,0,0.2);
 }
 .cardHeader{
   padding:12px 14px;display:flex;align-items:center;justify-content:space-between;gap:10px;
   background:var(--card-header-bg);border-bottom:1px solid var(--line);
   font-size:14px;font-weight:700;
 }
-.cardHeader h2{margin:0;font-size:14px}
+.cardHeader h2{margin:0;font-size:14px;color:#fff}
 .cardBody{padding:14px;overflow-x:auto}
 
 /* ── Calendar ── */
@@ -117,12 +142,12 @@ select,input[type="number"],input[type="text"],input[type="password"],input[type
 .day{
   min-height:68px;padding:6px;border-radius:10px;
   border:1px solid var(--day-border);background:var(--day-bg);
-  display:flex;flex-direction:column;min-width:0;cursor:pointer;transition:border-color 0.15s;
+  display:flex;flex-direction:column;min-width:0;cursor:pointer;transition:all 0.15s;
 }
-.day:hover:not(.inactive){border-color:var(--accent)}
-.day.selected{border:2px solid var(--accent);background:rgba(37,99,235,0.08)}
+.day:hover:not(.inactive){border-color:var(--accent);box-shadow:0 0 8px rgba(77,208,225,0.2)}
+.day.selected{border:2px solid var(--accent);background:rgba(77,208,225,0.1)}
 .day.inactive{opacity:0.25;cursor:default;pointer-events:none}
-.dnum{font-weight:800;font-size:15px}
+.dnum{font-weight:800;font-size:15px;color:#fff}
 .time{font-size:10px;color:var(--muted);margin-top:2px}
 .badge{
   margin-top:auto;display:inline-block;padding:3px 0;border-radius:6px;
@@ -143,7 +168,7 @@ select,input[type="number"],input[type="text"],input[type="password"],input[type
 table{width:100%;border-collapse:separate;border-spacing:0 8px;font-size:13px}
 thead th{
   text-align:left;font-size:12px;font-weight:800;
-  padding:10px 10px;background:linear-gradient(90deg,var(--accent),var(--accent2));color:var(--th-color);
+  padding:10px 10px;background:linear-gradient(90deg,#00838f,#00695c);color:var(--th-color);
 }
 thead th:first-child{border-top-left-radius:10px;border-bottom-left-radius:10px}
 thead th:last-child{border-top-right-radius:10px;border-bottom-right-radius:10px}
@@ -174,17 +199,18 @@ tbody tr:hover{opacity:0.85}
 
 /* ── Mini Card ── */
 .mini{
-  background:var(--panel2);border:1px solid var(--line);
+  background:rgba(0,60,30,0.5);border:1px solid var(--line);
   border-radius:10px;padding:10px;min-width:0;overflow:hidden;
+  backdrop-filter:blur(2px);
 }
 .mini label{display:block;color:var(--muted);font-size:12px;margin-bottom:6px}
-.mini strong{display:block;font-size:14px}
+.mini strong{display:block;font-size:14px;color:#fff}
 
 /* ── Shuttle & Pay Boxes ── */
-.shuttleBox{margin-top:12px;padding:12px;border-radius:12px;background:var(--panel2);border:1px solid var(--line)}
-.shuttleBox h3{margin:0 0 10px;font-size:13px}
-.payBox{margin-top:12px;padding:12px;border-radius:12px;background:var(--panel2);border:1px solid var(--line)}
-.payBox h3{margin:0 0 10px;font-size:13px}
+.shuttleBox{margin-top:12px;padding:12px;border-radius:12px;background:rgba(0,60,30,0.4);border:1px solid var(--line)}
+.shuttleBox h3{margin:0 0 10px;font-size:13px;color:#fff}
+.payBox{margin-top:12px;padding:12px;border-radius:12px;background:rgba(0,60,30,0.4);border:1px solid var(--line)}
+.payBox h3{margin:0 0 10px;font-size:13px;color:#fff}
 .payRow{display:grid;grid-template-columns:1.2fr 0.7fr 0.9fr auto;gap:8px;align-items:center}
 .payRow .btn{padding:9px 10px}
 
@@ -201,20 +227,22 @@ tbody tr:hover{opacity:0.85}
 
 /* ── Theme Button ── */
 .themeBtn{
-  border:0;cursor:pointer;background:transparent;font-size:20px;
+  border:0;cursor:pointer;background:rgba(255,255,255,0.08);font-size:20px;
   padding:6px 8px;border-radius:8px;border:1px solid var(--line);line-height:1;
+  color:var(--text);
 }
 
 /* ── Modal ── */
 .modal-overlay{
-  position:fixed;inset:0;z-index:1000;background:rgba(0,0,0,0.45);
+  position:fixed;inset:0;z-index:1000;background:rgba(0,0,0,0.6);
   display:flex;align-items:center;justify-content:center;
+  backdrop-filter:blur(2px);
 }
 .modal-content{
-  background:var(--panel);border-radius:12px;padding:24px;
+  background:rgba(0,50,25,0.95);border:1px solid var(--line);border-radius:12px;padding:24px;
   min-width:380px;max-width:500px;max-height:80vh;
-  display:flex;flex-direction:column;box-shadow:0 8px 32px rgba(0,0,0,0.2);
-  overflow-y:auto;
+  display:flex;flex-direction:column;box-shadow:0 8px 32px rgba(0,0,0,0.4);
+  overflow-y:auto;color:var(--text);
 }
 
 /* ── Login Overlay ── */
@@ -224,13 +252,14 @@ tbody tr:hover{opacity:0.85}
 }
 .loginCard{
   background:var(--panel);padding:32px;border-radius:16px;
-  box-shadow:0 4px 24px rgba(0,0,0,.15);width:340px;text-align:center;
+  box-shadow:0 4px 24px rgba(0,0,0,.3);width:340px;text-align:center;
+  border:1px solid var(--line);backdrop-filter:blur(4px);
 }
-.loginCard h2{margin:0 0 8px}
+.loginCard h2{margin:0 0 8px;color:#fff}
 .loginCard .sub{margin:0 0 20px}
-.login-input{width:100%;padding:10px;margin-bottom:10px;font-size:1rem;background:var(--panel2)}
+.login-input{width:100%;padding:10px;margin-bottom:10px;font-size:1rem;background:rgba(0,40,20,0.5);color:var(--text);border:1px solid var(--line);border-radius:8px}
 .login-btn{width:100%;padding:10px;font-size:1rem}
-.login-error{color:#dc2626;font-size:.85rem;margin-bottom:10px}
+.login-error{color:#ef5350;font-size:.85rem;margin-bottom:10px}
 .login-hint{color:var(--muted);font-size:.8rem;margin:14px 0 0}
 
 /* ── Footer ── */
@@ -259,7 +288,7 @@ footer{text-align:center;padding:18px 0 24px;color:var(--muted);font-size:12px}
 
 /* ── Modal ── */
 .modal-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px}
-.modal-header h3{margin:0}
+.modal-header h3{margin:0;color:#fff}
 .modal-footer{margin-top:16px;text-align:right}
 
 /* ── Buttons ── */
@@ -268,8 +297,8 @@ footer{text-align:center;padding:18px 0 24px;color:var(--muted);font-size:12px}
 .btn-remove{background:none;border:none;color:var(--booked);cursor:pointer;font-size:14px;padding:0 4px}
 .btn-danger-sm{background:var(--booked);color:#fff;border:none;border-radius:6px;padding:4px 10px;font-size:.75rem;cursor:pointer;font-family:inherit}
 .btn-standby{padding:4px 12px;font-size:12px;border-radius:8px;border:1px solid;cursor:pointer;font-family:inherit;font-weight:600}
-.btn-standby.active{border-color:var(--danger-color);color:var(--danger-color);background:rgba(220,38,38,.08)}
-.btn-standby.inactive{border-color:var(--warn);color:var(--warn);background:rgba(245,158,11,.08)}
+.btn-standby.active{border-color:var(--danger-color);color:var(--danger-color);background:rgba(220,38,38,.12)}
+.btn-standby.inactive{border-color:var(--warn);color:var(--warn);background:rgba(245,158,11,.12)}
 .link-btn{text-decoration:none;display:inline-flex;align-items:center}
 
 /* ── Inputs in mini cards ── */
@@ -281,8 +310,8 @@ footer{text-align:center;padding:18px 0 24px;color:var(--muted);font-size:12px}
 
 /* ── Stats ── */
 .stat-accent{font-size:1.3rem;color:var(--accent)}
-.stat-danger{font-size:1.3rem;color:#ef4444}
-.stat-success{font-size:1.3rem;color:#10b981}
+.stat-danger{font-size:1.3rem;color:#ef5350}
+.stat-success{font-size:1.3rem;color:#66bb6a}
 .accent-text{color:var(--accent)}
 
 /* ── History header ── */
