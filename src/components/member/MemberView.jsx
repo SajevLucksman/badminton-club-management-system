@@ -20,13 +20,15 @@ export default function MemberView({ data, players, selectedKey, setSelectedKey,
     <>
       <div className="topbar section-wide-pad">
         <div className="brand">
-          <h1>Badminton Charges Manager</h1>
-          <p>Member View — Read Only</p>
+          <img src="/club-logo.png" alt="Club Logo" className="brand-logo" />
+          <div>
+            <h1>Shuttle and Scales</h1><p className="sub">Harmony Smashes</p>
+          </div>
         </div>
         <div className="monthCtl">
           <MonthNav selectedKey={selectedKey} setSelectedKey={setSelectedKey} currentKey={currentKey} />
-          <Link to="/admin" className="btn secondary link-btn">Admin</Link>
-          <button className="themeBtn" onClick={toggle}>{theme === 'dark' ? 'Light' : 'Dark'}</button>
+          <Link to="/admin" className="btn secondary link-btn">🛡️ Admin</Link>
+          <button className="themeBtn" onClick={toggle}>{theme === 'dark' ? '☀️' : '🌙'}</button>
         </div>
       </div>
 
