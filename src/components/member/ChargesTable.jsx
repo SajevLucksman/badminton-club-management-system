@@ -13,7 +13,7 @@ export default function ChargesTable({ data, players, selectedKey, onShowHistory
   const { y, mIndex } = parseKey(selectedKey);
   const title = `${MONTH_NAMES[mIndex]} ${y}`;
   const month = data.months[selectedKey];
-  const totals = monthTotals(data, selectedKey, players.main, players.standby);
+  const totals = monthTotals(data, selectedKey, players.main, players.standby, players.enrolled, players.left);
   const activeMainCount = totals.rows.filter(r => !r.isStandby).length;
 
   return (
@@ -23,26 +23,34 @@ export default function ChargesTable({ data, players, selectedKey, onShowHistory
         <div className="sub">Read-only view</div>
       </div>
       <div className="cardBody">
-        <div className="grid4">
+        <div className="grid3">
           <div className="mini"><label>Court rate per hour (LKR)</label><strong>{fmtMoney(month.hourlyRate)}</strong></div>
           <div className="mini"><label>Days booked</label><strong>{totals.days}</strong></div>
           <div className="mini"><label>Court total (LKR)</label><strong>{fmtMoney(totals.courtTotal)}</strong><div className="sub">Days × hourly rate</div></div>
-          <div className="mini"><label>Per person (LKR)</label><strong>{fmtMoney(totals.per)}</strong><div className="sub">÷ {activeMainCount} main players</div></div>
         </div>
 
         <div className="shuttleBox">
           <h3>Shuttle Charges</h3>
-          <div className="grid3">
+          <div className="grid4">
             <div className="mini"><label>Cost per tin (LKR)</label><strong>{fmtMoney(month.tinCost)}</strong></div>
             <div className="mini"><label>Tins this month</label><strong>{month.tinCount}</strong></div>
+            <div className="mini"><label>Courier charges (LKR)</label><strong>{fmtMoney(month.courierCharges || 0)}</strong></div>
             <div className="mini"><label>Shuttle total (LKR)</label><strong>{fmtMoney(totals.shuttleTotal)}</strong></div>
           </div>
         </div>
 
+        {(month.miscExpenses || []).length > 0 && <div className="shuttleBox" style={{ marginTop: 12 }}>
+          <h3>Miscellaneous Payments</h3>
+          <ul className="histList">
+            {month.miscExpenses.map((item, i) => <li key={i}><span>{item.desc} — LKR {fmtMoney(item.amount)}</span></li>)}
+          </ul>
+          <div className="mini" style={{ marginTop: 8 }}><label>Misc total (LKR)</label><strong>{fmtMoney(month.miscExpenses.reduce((s, e) => s + e.amount, 0))}</strong></div>
+        </div>}
+
         <div className="grid3" style={{ marginTop: 12 }}>
-          <div className="mini"><label>Grand total (LKR)</label><strong>{fmtMoney(totals.expense)}</strong><div className="sub">Court + Shuttles</div></div>
+          <div className="mini"><label>Grand total (LKR)</label><strong>{fmtMoney(totals.expense)}</strong><div className="sub">Court + Shuttles + Misc</div></div>
           <div className="mini"><label>Standby contributions (LKR)</label><strong>{fmtMoney(totals.standbyTotal)}</strong></div>
-          <div className="mini"><label>Per main player (LKR)</label><strong>{fmtMoney(totals.per)}</strong></div>
+          <div className="mini"><label>Per main player (LKR)</label><strong style={{ color: '#f59e0b', fontSize: '1.1rem' }}>{fmtMoney(totals.per)}</strong></div>
         </div>
 
         <table>

@@ -61,38 +61,46 @@ export function getCourtTotal(data, key) {
 
 export function getShuttleTotal(data, key) {
   const m = data.months[key];
-  return clamp2((m?.tinCount || 0) * (m?.tinCost || 4500));
+  return clamp2((m?.tinCount || 0) * (m?.tinCost || 4500) + (m?.courierCharges || 0));
 }
 
 export function getMonthExpense(data, key) {
-  return clamp2(getCourtTotal(data, key) + getShuttleTotal(data, key));
+  const m = data.months[key];
+  const misc = (m?.miscExpenses || []).reduce((s, e) => s + (Number(e.amount) || 0), 0);
+  return clamp2(getCourtTotal(data, key) + getShuttleTotal(data, key) + misc);
 }
 
 export function getExpenseTotal(data, key) {
   const expenses = data.months[key]?.expenses || [];
-  let court = 0, shuttle = 0;
+  let court = 0, shuttle = 0, misc = 0;
   expenses.forEach(e => {
     if (e.type === 'court') court = clamp2(court + Number(e.amount));
-    else shuttle = clamp2(shuttle + Number(e.amount));
+    else if (e.type === 'misc') misc = clamp2(misc + Number(e.amount));
+    else shuttle = clamp2(shuttle + Number(e.amount) + (Number(e.courierCharges) || 0));
   });
-  return { court, shuttle, total: clamp2(court + shuttle) };
+  return { court, shuttle, misc, total: clamp2(court + shuttle + misc) };
 }
 
-export function monthTotals(data, key, members, standbyPlayers) {
+export function monthTotals(data, key, members, standbyPlayers, enrolled, left) {
   const month = data.months[key];
   if (!month) return { per: 0, expense: 0, courtTotal: 0, shuttleTotal: 0, standbyTotal: 0, days: 0, rows: [], payments: [] };
+  const enr = enrolled || {};
+  const lft = left || {};
+  const isActive = (m) => (!enr[m] || enr[m] <= key) && (!lft[m] || lft[m] > key);
+  const activeMembers = members.filter(isActive);
+  const activeStandby = standbyPlayers.filter(isActive);
   const expense = getMonthExpense(data, key);
   const monthlyStandby = month.monthlyStandby || [];
   const creditIn = data.credits[key] || {};
-  const allPlayers = [...members, ...standbyPlayers];
+  const allPlayers = [...activeMembers, ...activeStandby];
   const paid = {}, lastDate = {};
   allPlayers.forEach(m => { paid[m] = 0; lastDate[m] = ''; });
   month.payments.forEach(p => {
     paid[p.member] = clamp2(paid[p.member] + Number(p.amount));
     if (!lastDate[p.member] || new Date(p.dateISO) >= new Date(lastDate[p.member])) lastDate[p.member] = p.dateISO;
   });
-  const allStandby = [...standbyPlayers, ...members.filter(m => monthlyStandby.includes(m))];
-  const activeMain = members.filter(m => !monthlyStandby.includes(m));
+  const allStandby = [...activeStandby, ...activeMembers.filter(m => monthlyStandby.includes(m))];
+  const activeMain = activeMembers.filter(m => !monthlyStandby.includes(m));
   let standbyTotal = 0;
   const standbyRows = allStandby.map(m => {
     const cin = clamp2(creditIn[m] || 0), p = clamp2(paid[m] || 0);
@@ -114,19 +122,19 @@ export function monthTotals(data, key, members, standbyPlayers) {
   return { per, expense, courtTotal: getCourtTotal(data, key), shuttleTotal: getShuttleTotal(data, key), standbyTotal, days: month.selectedDays.length, rows: [...rows, ...standbyRows], payments: month.payments };
 }
 
-export function propagateCreditsForward(data, key, members, standbyPlayers) {
-  const { rows, standbyTotal } = monthTotals(data, key, members, standbyPlayers);
+export function propagateCreditsForward(data, key, members, standbyPlayers, enrolled, left) {
+  const enr = enrolled || {};
+  const lft = left || {};
+  const isActive = (m) => (!enr[m] || enr[m] <= key) && (!lft[m] || lft[m] > key);
+  const { rows } = monthTotals(data, key, members, standbyPlayers, enrolled, left);
   const nk = nextMonthKey(key);
   ensureMonth(data, nk, members, standbyPlayers);
-  const fullExpense = getExpenseTotal(data, key).total;
-  let totalDue = standbyTotal;
-  rows.forEach(r => { if (!r.isStandby) totalDue = clamp2(totalDue + r.due); });
-  const extraSpend = clamp2(Math.max(0, fullExpense - totalDue));
-  const mainRows = rows.filter(r => !r.isStandby);
-  const mainCount = mainRows.length || 1;
-  const extraPerMain = clamp2(extraSpend / mainCount);
+  // Reset all credits for next month first
+  [...members, ...standbyPlayers].forEach(m => { data.credits[nk][m] = 0; });
+  // Only propagate for players active in current month
   rows.forEach(r => {
+    if (!isActive(r.member)) return;
     if (r.isStandby) data.credits[nk][r.member] = r.creditOut;
-    else data.credits[nk][r.member] = clamp2(clamp2(r.creditOut - r.outstanding) - extraPerMain);
+    else data.credits[nk][r.member] = clamp2(r.creditOut - r.outstanding);
   });
 }

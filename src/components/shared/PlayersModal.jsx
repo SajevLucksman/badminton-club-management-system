@@ -1,8 +1,10 @@
 import { useState } from 'react';
 
-export default function PlayersModal({ players, onClose, onSave }) {
+export default function PlayersModal({ players, onClose, onSave, selectedKey }) {
   const [main, setMain] = useState([...players.main]);
   const [standby, setStandby] = useState([...players.standby]);
+  const [enrolled, setEnrolled] = useState({ ...players.enrolled });
+  const [left, setLeft] = useState({ ...(players.left || {}) });
   const [name, setName] = useState('');
   const [type, setType] = useState('main');
 
@@ -10,7 +12,17 @@ export default function PlayersModal({ players, onClose, onSave }) {
     const n = name.trim();
     if (!n || main.includes(n) || standby.includes(n)) return;
     type === 'main' ? setMain([...main, n]) : setStandby([...standby, n]);
+    if (!enrolled[n]) setEnrolled({ ...enrolled, [n]: selectedKey });
+    // Clear leftFrom if re-adding
+    const newLeft = { ...left };
+    delete newLeft[n];
+    setLeft(newLeft);
     setName('');
+  };
+
+  const remove = (m, list, setList) => {
+    setList(list.filter(p => p !== m));
+    setLeft({ ...left, [m]: selectedKey });
   };
 
   return (
@@ -22,19 +34,21 @@ export default function PlayersModal({ players, onClose, onSave }) {
         </div>
         <div className="player-group-label accent">MAIN PLAYERS</div>
         <ul className="player-list">
-          {main.map((m, i) => (
+          {main.map((m) => (
             <li key={m} className="player-list-item">
               <span>{m}</span>
-              <button className="btn-close danger" onClick={() => setMain(main.filter((_, j) => j !== i))}>x</button>
+              <input type="month" value={enrolled[m] || ''} onChange={e => setEnrolled({ ...enrolled, [m]: e.target.value })} style={{ fontSize: '0.75rem', padding: '2px 4px' }} />
+              <button className="btn-close danger" onClick={() => remove(m, main, setMain)}>x</button>
             </li>
           ))}
         </ul>
         <div className="player-group-label warn">STANDBY PLAYERS</div>
         <ul className="player-list">
-          {standby.map((m, i) => (
+          {standby.map((m) => (
             <li key={m} className="player-list-item">
               <span>{m}</span>
-              <button className="btn-close danger" onClick={() => setStandby(standby.filter((_, j) => j !== i))}>x</button>
+              <input type="month" value={enrolled[m] || ''} onChange={e => setEnrolled({ ...enrolled, [m]: e.target.value })} style={{ fontSize: '0.75rem', padding: '2px 4px' }} />
+              <button className="btn-close danger" onClick={() => remove(m, standby, setStandby)}>x</button>
             </li>
           ))}
         </ul>
@@ -47,7 +61,7 @@ export default function PlayersModal({ players, onClose, onSave }) {
           <button className="btn" onClick={add}>+ Add</button>
         </div>
         <div className="modal-footer">
-          <button className="btn" onClick={() => onSave({ main, standby })}>Save</button>
+          <button className="btn" onClick={() => onSave({ main, standby, enrolled, left })}>Save</button>
         </div>
       </div>
     </div>
