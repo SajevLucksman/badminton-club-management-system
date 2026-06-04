@@ -6,7 +6,8 @@ export default function Expenses({ data, players, selectedKey }) {
   const { court, shuttle, misc, total: expTotal } = getExpenseTotal(data, selectedKey);
   const totals = monthTotals(data, selectedKey, players.main, players.standby, players.enrolled, players.left);
   let totalCollected = 0;
-  totals.rows.forEach(r => { totalCollected = clamp2(totalCollected + r.paid); });
+  let totalCreditNext = 0;
+  totals.rows.forEach(r => { totalCollected = clamp2(totalCollected + r.paid); totalCreditNext = clamp2(totalCreditNext + r.creditOut); });
   const balance = clamp2(totalCollected - expTotal);
 
   return (
@@ -51,6 +52,11 @@ export default function Expenses({ data, players, selectedKey }) {
               : balance === 0 ? 'Perfectly balanced.'
               : `Deficit! Spent LKR ${fmtMoney(Math.abs(balance))} more than collected.`}
           </div>
+        </div>
+
+        <div style={{ marginTop: 16, padding: 16, borderRadius: 12, background: 'rgba(99,102,241,0.1)', border: '2px solid rgba(99,102,241,0.4)', textAlign: 'center' }}>
+          <div className="sub">Credit to next Month (LKR)</div>
+          <strong style={{ fontSize: '1.4rem', color: '#6366f1' }}>{fmtMoney(totalCreditNext)}</strong>
         </div>
       </div>
     </section>
