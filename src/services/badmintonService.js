@@ -10,6 +10,8 @@ export function subscribeToBadmintonData(callback) {
     const players = {
       main: obj._members?.main || [],
       standby: obj._members?.standby || [],
+      enrolled: obj._members?.enrolled || {},
+      left: obj._members?.left || {},
     };
     const data = JSON.parse(JSON.stringify(obj));
     delete data._members;
@@ -21,6 +23,6 @@ export function subscribeToBadmintonData(callback) {
 
 export function saveBadmintonData(data, players) {
   const payload = JSON.parse(JSON.stringify(data));
-  payload._members = { main: players.main, standby: players.standby };
+  payload._members = { main: players.main, standby: players.standby, enrolled: players.enrolled || {}, left: players.left || {} };
   return setDoc(DOC_REF, payload);
 }

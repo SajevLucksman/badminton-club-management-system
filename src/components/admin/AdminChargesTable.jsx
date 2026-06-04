@@ -5,9 +5,11 @@ export default function AdminChargesTable({ data, players, selectedKey, month, u
   const [payMember, setPayMember] = useState('');
   const [payAmount, setPayAmount] = useState('');
   const [payDate, setPayDate] = useState(new Date().toISOString().slice(0, 10));
+  const [miscDesc, setMiscDesc] = useState('');
+  const [miscAmount, setMiscAmount] = useState('');
 
   const { y, mIndex } = parseKey(selectedKey);
-  const totals = monthTotals(data, selectedKey, players.main, players.standby);
+  const totals = monthTotals(data, selectedKey, players.main, players.standby, players.enrolled, players.left);
   const activeMainCount = totals.rows.filter(r => !r.isStandby).length;
 
   const addPayment = () => {
@@ -21,19 +23,18 @@ export default function AdminChargesTable({ data, players, selectedKey, month, u
       <div className="cardHeader"><h2>{MONTH_NAMES[mIndex]} {y} — Charges & Payments</h2></div>
       <div className="cardBody">
         {/* Rates */}
-        <div className="grid4">
+        <div className="grid3">
           <div className="mini">
             <label>Court rate/hr (LKR)</label>
             <input type="number" className="mini-input" value={month.hourlyRate ?? 800} onChange={e => updateMonth(selectedKey, m => { m.hourlyRate = Math.max(0, Number(e.target.value) || 0); })} />
           </div>
           <div className="mini"><label>Days booked</label><strong>{totals.days}</strong></div>
           <div className="mini"><label>Court total (LKR)</label><strong>{fmtMoney(totals.courtTotal)}</strong></div>
-          <div className="mini"><label>Per person (LKR)</label><strong>{fmtMoney(totals.per)}</strong><div className="sub">÷ {activeMainCount} main</div></div>
         </div>
 
         <div className="shuttleBox">
           <h3>Shuttle Charges</h3>
-          <div className="grid3">
+          <div className="grid4">
             <div className="mini">
               <label>Cost per tin (LKR)</label>
               <input type="number" className="mini-input" value={month.tinCost ?? 4500} onChange={e => updateMonth(selectedKey, m => { m.tinCost = Math.max(0, Number(e.target.value) || 0); })} />
@@ -42,14 +43,33 @@ export default function AdminChargesTable({ data, players, selectedKey, month, u
               <label>Tins this month</label>
               <input type="number" className="mini-input" value={month.tinCount ?? 0} onChange={e => updateMonth(selectedKey, m => { m.tinCount = Math.max(0, Number(e.target.value) || 0); })} />
             </div>
+            <div className="mini">
+              <label>Courier charges (LKR)</label>
+              <input type="number" className="mini-input" value={month.courierCharges ?? 0} onChange={e => updateMonth(selectedKey, m => { m.courierCharges = Math.max(0, Number(e.target.value) || 0); })} />
+            </div>
             <div className="mini"><label>Shuttle total (LKR)</label><strong>{fmtMoney(totals.shuttleTotal)}</strong></div>
           </div>
+        </div>
+
+        <div className="shuttleBox" style={{ marginTop: 12 }}>
+          <h3>Miscellaneous Payments</h3>
+          <div className="payRow">
+            <input type="text" placeholder="Description (e.g. Net Purchase)" value={miscDesc} onChange={e => setMiscDesc(e.target.value)} />
+            <input type="number" placeholder="Amount (LKR)" value={miscAmount} onChange={e => setMiscAmount(e.target.value)} />
+            <button className="btn" onClick={() => { if (!miscDesc || !miscAmount) return; updateMonth(selectedKey, m => { if (!m.miscExpenses) m.miscExpenses = []; m.miscExpenses.push({ desc: miscDesc, amount: clamp2(Number(miscAmount)) }); }); setMiscDesc(''); setMiscAmount(''); }}>+ Add</button>
+          </div>
+          {(month.miscExpenses || []).length > 0 && <ul className="histList" style={{ marginTop: 8 }}>
+            {month.miscExpenses.map((item, i) => (
+              <li key={i}><span>{item.desc} — LKR {fmtMoney(item.amount)}</span><button className="btn-remove" onClick={() => updateMonth(selectedKey, m => { m.miscExpenses.splice(i, 1); })}>x</button></li>
+            ))}
+          </ul>}
+          <div className="mini" style={{ marginTop: 8 }}><label>Misc total (LKR)</label><strong>{fmtMoney((month.miscExpenses || []).reduce((s, e) => s + e.amount, 0))}</strong></div>
         </div>
 
         <div className="grid3 mt-12">
           <div className="mini"><label>Grand total (LKR)</label><strong>{fmtMoney(totals.expense)}</strong></div>
           <div className="mini"><label>Standby contributions</label><strong>{fmtMoney(totals.standbyTotal)}</strong></div>
-          <div className="mini"><label>Per main player</label><strong>{fmtMoney(totals.per)}</strong></div>
+          <div className="mini"><label>Per main player</label><strong style={{ color: '#f59e0b', fontSize: '1.1rem' }}>{fmtMoney(totals.per)}</strong></div>
         </div>
 
         {/* Payment table */}

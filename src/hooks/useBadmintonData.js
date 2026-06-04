@@ -13,6 +13,12 @@ export function useBadmintonData() {
 
   useEffect(() => {
     return subscribeToBadmintonData(({ data: d, players: p }) => {
+      // Re-propagate credits for all months on load
+      const keys = Object.keys(d.months).sort();
+      keys.forEach(k => {
+        ensureMonth(d, k, p.main, p.standby);
+        propagateCreditsForward(d, k, p.main, p.standby, p.enrolled, p.left);
+      });
       setData(d);
       setPlayers(p);
     });
@@ -32,7 +38,7 @@ export function useBadmintonData() {
     const d = JSON.parse(JSON.stringify(data));
     ensureMonth(d, key, players.main, players.standby);
     updater(d.months[key], d);
-    propagateCreditsForward(d, key, players.main, players.standby);
+    propagateCreditsForward(d, key, players.main, players.standby, players.enrolled, players.left);
     save(d);
   }, [data, players, save]);
 

@@ -84,7 +84,7 @@ export default function AdminDashboard({ data, players, selectedKey, setSelected
       <footer>© 2026 Sajev Lucksman. All rights reserved.</footer>
 
       {historyPlayer && <PlayerHistory data={data} player={historyPlayer} onClose={() => setHistoryPlayer(null)} />}
-      {showPlayers && <PlayersModal players={players} onClose={() => setShowPlayers(false)} onSave={p => { save(JSON.parse(JSON.stringify(data)), p); setShowPlayers(false); }} />}
+      {showPlayers && <PlayersModal players={players} selectedKey={selectedKey} onClose={() => setShowPlayers(false)} onSave={p => { save(JSON.parse(JSON.stringify(data)), p); setShowPlayers(false); }} />}
     </>
   );
 }
