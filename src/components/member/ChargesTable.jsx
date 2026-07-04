@@ -56,8 +56,8 @@ export default function ChargesTable({ data, players, selectedKey, onShowHistory
         <table>
           <thead>
             <tr>
-              <th>Member</th><th className="right">Due (LKR)</th><th className="right">Paid (LKR)</th>
-              <th>Last paid date</th><th className="right">Outstanding (LKR)</th>
+              <th>Member</th><th className="right">Due (LKR)</th><th className="right" style={{ background: 'rgba(239,68,68,0.1)', color: '#ef4444' }}>Outstanding (LKR)</th><th className="right">Paid (LKR)</th>
+              <th>Last paid date</th>
               <th className="right">Credit to next (LKR)</th><th>Status</th>
             </tr>
           </thead>
@@ -69,9 +69,9 @@ export default function ChargesTable({ data, players, selectedKey, onShowHistory
                   {r.isStandby ? <div className="sub">Standby player</div> : <div className="sub">Credit in: LKR {fmtMoney(r.creditIn)}</div>}
                 </td>
                 <td className="right">{r.isStandby ? '—' : fmtMoney(r.due)}</td>
+                <td className="right" style={{ background: 'rgba(239,68,68,0.1)', color: '#ef4444', fontWeight: 700 }}>{r.isStandby ? '—' : fmtMoney(r.outstanding)}</td>
                 <td className="right">{fmtMoney(r.paid)}</td>
                 <td>{r.last || <span className="sub">—</span>}</td>
-                <td className="right">{r.isStandby ? '—' : fmtMoney(r.outstanding)}</td>
                 <td className="right">{fmtMoney(r.creditOut)}</td>
                 <td>{statusPill(r)}</td>
               </tr>
